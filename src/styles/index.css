@@ -8,7 +8,9 @@
     font-family: 'Poppins', sans-serif;
 }
 
-html, body, #root {
+html,
+body,
+#root {
     width: 100%;
     height: 100%;
     padding: 0;
@@ -23,4 +25,13 @@ nav {
     height: 100%;
     width: calc(100% - 120px);
     float: left;
+}
+
+@layer components {
+    .label {
+        @apply text-gray-600 text-sm placeholder:text-gray-500;
+    }
+    .input {
+        @apply border-black border px-2;
+    }
 }
