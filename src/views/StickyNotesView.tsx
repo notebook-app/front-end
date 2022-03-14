@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
+import Nav from "../components/layout/Nav";
 
 function waitForElement(selector: string): Promise<Element | null> {
     return new Promise((resolve, reject) => {
@@ -13,7 +14,7 @@ function waitForElement(selector: string): Promise<Element | null> {
             }
         });
 
-        observer.observe(document.body, { childList: true, subtree: true });
+        observer.observe(document.body, {childList: true, subtree: true});
     });
 }
 
@@ -32,27 +33,27 @@ interface StickyNote {
 }
 
 const colors: StickyNoteColor[] = [
-    { id: 'color:light-yellow', hex: '#f9c978' },
-    { id: 'color:oceanic', hex: '#94d2bd' },
-    { id: 'color:pink', hex: '#ff758f' },
-    { id: 'color:blue', hex: '#c3d1f6' },
-    { id: 'color:light-ping', hex: '#f0b9c4' },
+    {id: 'color:light-yellow', hex: '#f9c978'},
+    {id: 'color:oceanic', hex: '#94d2bd'},
+    {id: 'color:pink', hex: '#ff758f'},
+    {id: 'color:blue', hex: '#c3d1f6'},
+    {id: 'color:light-ping', hex: '#f0b9c4'},
 ];
 
 function StickyNote({
-    color,
-    title,
-    description,
-    id,
-    date,
-    isFavourite,
-}: StickyNote) {
+                        color,
+                        title,
+                        description,
+                        id,
+                        date,
+                        isFavourite,
+                    }: StickyNote) {
     return (
         <div
             className={
                 'w-52 h-52 rounded-sm p-1 relative float-left ml-10 mt-10'
             }
-            style={{ background: color.hex }}
+            style={{background: color.hex}}
             data-note-id={id}
         >
             <div
@@ -105,11 +106,12 @@ function StickyNote({
     );
 }
 
-export default function StickyNotes() {
+export default function StickyNotesView() {
     const [notes, setNotes] = useState<Array<StickyNote>>([]);
 
     return (
         <section className={'view-with-standard-nav'}>
+            <Nav/>
             <div className={'w-full h-[70px] p-2 '}>
                 <span className={'text-2xl text-red-300'}>Hello, user</span>
                 <span className={'absolute right-0 p-2 w-fit'}>
@@ -117,7 +119,7 @@ export default function StickyNotes() {
                         return (
                             <span
                                 key={color.id}
-                                style={{ background: color.hex }}
+                                style={{background: color.hex}}
                                 className={
                                     'w-5 h-5 ml-2 cursor-pointer rounded-full inline-block'
                                 }
@@ -146,7 +148,7 @@ export default function StickyNotes() {
             <div className={'text-3xl pl-2'}>Notes</div>
             <div className={'p-2'}>
                 {notes.map((note: StickyNote) => {
-                    return <StickyNote {...note} key={note.id} />;
+                    return <StickyNote {...note} key={note.id}/>;
                 })}
             </div>
         </section>
