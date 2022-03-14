@@ -17,4 +17,3 @@ export type NoteT = {
 
 export type UserSetterT = Dispatch<SetStateAction<UserT>>;
 export type HasAccountSetterT = Dispatch<SetStateAction<boolean>>;
-export type ActiveNoteSetterT = Dispatch<SetStateAction<NoteT>>;
