@@ -1,7 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;500;600&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+    --nav-width: 150px;
+}
 
 * {
     box-sizing: border-box;
@@ -18,12 +23,12 @@ body,
 }
 
 nav {
-    width: 120px;
+    width: var(--nav-width);
 }
 
 .view-with-standard-nav {
     height: 100%;
-    width: calc(100% - 120px);
+    width: calc(100% - var(--nav-width));
     float: left;
 }
 
@@ -31,6 +36,7 @@ nav {
     .label {
         @apply text-gray-600 text-sm placeholder:text-gray-500;
     }
+
     .input {
         @apply border-black border px-2;
     }
