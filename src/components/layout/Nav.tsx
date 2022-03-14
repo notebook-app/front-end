@@ -27,6 +27,7 @@ export default function Nav({children}: { children?: JSX.Element }) {
                 {
                     endpoints.map(({url, name}: RouteEndpoint, index: number) => {
                         return <a
+                            key={url}
                             className={`ml-5 mr-5 hover:text-gray-400 ${index === endpoints.length - 1 && 'mb-5'}`}
                             href={url}
                         >
