@@ -10,6 +10,7 @@ export type AuthUserT = {
 };
 
 export type NoteT = {
+    id: string;
     title: string;
     unFormattedContent: string;
     backgroundUrl?: string;
