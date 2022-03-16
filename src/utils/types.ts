@@ -15,5 +15,12 @@ export type NoteT = {
     backgroundUrl?: string;
 };
 
+export type GroupT = {
+    readonly id: string;
+    innerGroups: GroupT[];
+    title: string;
+    notes: NoteT[];
+};
+
 export type UserSetterT = Dispatch<SetStateAction<UserT>>;
 export type HasAccountSetterT = Dispatch<SetStateAction<boolean>>;
