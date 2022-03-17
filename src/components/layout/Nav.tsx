@@ -3,35 +3,35 @@ import React from 'react';
 type RouteEndpoint = {
     url: string;
     name: string;
+    icon: JSX.Element;
 };
 
 const endpoints: RouteEndpoint[] = [
     {
         url: '/sticky-notes',
-        name: 'Sticky'
+        name: 'Sticky',
+        icon: <i className="fa-solid fa-note-sticky"/>
     },
-    {
-        url: '/notes',
-        name: 'Notes'
-    },
+
 ];
 
 export default function Nav({children}: { children?: JSX.Element }) {
     return (
-        <nav className={'border-r-2 border-gray-300 h-full float-left'}>
+        <nav className={'border-r-2 border-gray-300 h-full float-left bg-[#1C1E26] text-white standard-nav'}>
             <div className="text-center font-light">
                 <span className={'text-sm'}>Notes</span>
             </div>
 
-            <div className={'grid mt-7 text-center border-b-2 border-gray-300'}>
+            <div className={'grid mt-7 text-left'}>
                 {
-                    endpoints.map(({url, name}: RouteEndpoint, index: number) => {
+                    endpoints.map(({url, name, icon}: RouteEndpoint, index: number) => {
                         return <a
                             key={url}
-                            className={`ml-5 mr-5 hover:text-gray-400 ${index === endpoints.length - 1 && 'mb-5'}`}
+                            className={`hover:bg-gray-600 w-4/5 text-center rounded-r-sm`}
                             href={url}
                         >
-                            {name}
+                            {icon}
+                            {' ' + name}
                         </a>
                     })
                 }
