@@ -1,22 +1,6 @@
 import React, {useState} from 'react';
 import Nav from "../components/layout/Nav";
-
-function waitForElement(selector: string): Promise<Element | null> {
-    return new Promise((resolve, reject) => {
-        if (document.querySelector(selector)) {
-            return resolve(document.querySelector(selector));
-        }
-
-        const observer = new MutationObserver((mutations) => {
-            if (document.querySelector(selector)) {
-                observer.disconnect();
-                return resolve(document.querySelector(selector));
-            }
-        });
-
-        observer.observe(document.body, {childList: true, subtree: true});
-    });
-}
+import {waitForElement} from "../utils/elements";
 
 interface StickyNoteColor {
     readonly id: string;
@@ -31,6 +15,7 @@ interface StickyNote {
     isFavourite: boolean;
     color: StickyNoteColor;
 }
+
 
 const colors: StickyNoteColor[] = [
     {id: 'color:light-yellow', hex: '#f9c978'},
