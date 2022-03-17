@@ -7,9 +7,10 @@ import NotesView from "./views/NotesView";
 
 const testNotes: NoteT[] = [
     {
+        id: 'dsaueh',
         title: 'title',
         backgroundUrl: '',
-        unFormattedContent: ''
+        unFormattedContent: '# test'
     }
 ];
 
@@ -29,8 +30,6 @@ function MainView({user, setUser}: { user: UserT, setUser: UserSetterT }) {
 
 export default function App() {
     const [user, setUser] = useState<UserT>({name: ''});
-    const [activeNote, setActiveNote] = useState<NoteT>({title: '', unFormattedContent: '', backgroundUrl: ''});
-
     useEffect(() => {
         // grab from localstorage if exists
     }, []);
@@ -41,7 +40,7 @@ export default function App() {
                 <Routes>
                     <Route path={'/'} element={<MainView user={user} setUser={setUser}/>}/>
                     <Route path={'/sticky-notes'} element={<StickyNotesView/>}/>
-                    <Route path={'/notes'} element={<NotesView setActiveNote={setActiveNote} notes={testNotes}/>}/>
+                    <Route path={'/notes'} element={<NotesView notes={testNotes}/>}/>
                 </Routes>
             </BrowserRouter>
         </div>
