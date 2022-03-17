@@ -5,7 +5,7 @@
 @tailwind utilities;
 
 :root {
-    --nav-width: 150px;
+    --nav-width: 200px;
 }
 
 * {
@@ -40,4 +40,12 @@ nav {
     .input {
         @apply border-black border px-2;
     }
+}
+
+.context-menu {
+    backdrop-filter: blur(4px);
+    color: #c6c3c3;
+    -webkit-backdrop-filter: blur(4px);
+    background: rgba(0, 0, 0, .8);
+    width: 150px;
 }
