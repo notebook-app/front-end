@@ -10,20 +10,12 @@ type ContextMenuGroupT = {
     options: ContextMenuOptionT[];
 }
 
-function getTarget(target: HTMLElement): HTMLElement {
-    if (target.getAttribute('data-note-id')) {
+function findContext(target: HTMLElement): HTMLElement {
+    if (target.hasAttribute('data-note-id') || target.hasAttribute('data-group-id')) {
         return target;
     }
 
-    if (target.getAttribute('data-group-id')) {
-        return target;
-    }
-
-    while (!target.getAttribute('data-group-id')) {
-        target = target.parentElement;
-    }
-
-    return target;
+    return target.parentElement;
 }
 
 const optionsOnNotesGroup: ContextMenuGroupT = {
@@ -94,10 +86,10 @@ document.addEventListener('mousemove', ({x, y}) => {
             contextMenu.remove();
         }
 
-        const target: HTMLElement = getTarget(e.target as HTMLElement);
+        const context: HTMLElement = findContext(e.target as HTMLElement);
+        const isNote: boolean = context.hasAttribute('data-note-id');
+        contextMenu = createContextMenu(isNote ? optionsOnSingleNote : optionsOnNotesGroup, {x, y});
 
-        if (target.classList.contains(''))
-
-            document.body.appendChild(contextMenu);
+        document.body.appendChild(contextMenu);
     });
 });
