@@ -1,5 +1,6 @@
 import MDNotesService from "../services/MDNotesService";
 import {store} from "../utils/store";
+import {defaultGroup} from "../utils/defaults";
 
 type ContextMenuOptionT = {
     readonly id: string;
@@ -35,6 +36,14 @@ const optionsOnNotesGroup: ContextMenuGroupT = {
             id: 'teasa',
             title: 'New note',
             action: () => {
+            }
+        },
+        {
+            id: 'tsad',
+            title: 'New group',
+            action: (parentId: string) => {
+                // @ts-ignore
+                store.dispatch(MDNotesService.addGroup(defaultGroup, 'd1'));
             }
         }
     ],
@@ -95,7 +104,8 @@ document.addEventListener('mousemove', ({x, y}) => {
 
         const context: HTMLElement = findContext(e.target as HTMLElement);
         const isNote: boolean = context.hasAttribute('data-note-id');
-        contextMenu = createContextMenu(isNote ? optionsOnSingleNote : optionsOnNotesGroup, {x, y});
+        const isGroup: boolean = context.hasAttribute('data-group-id');
+        contextMenu = createContextMenu(isNote ? optionsOnSingleNote : (isGroup ? optionsOnNotesGroup : null), {x, y});
 
         document.body.appendChild(contextMenu);
     });

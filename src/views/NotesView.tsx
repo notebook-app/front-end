@@ -1,47 +1,17 @@
-import React, {useState} from "react";
+import React from "react";
 import Nav from "../components/layout/Nav";
-import {GroupT, NoteT} from "../utils/types";
+import {GroupT, NoteT, StoreT} from "../utils/types";
+import {useDispatch, useSelector} from "react-redux";
+import MDNotesService from "../services/MDNotesService";
+import {defaultGroup} from "../utils/defaults";
 
 type Props = {
     notes: NoteT[];
 };
 
 export default function NotesView({notes}: Props): JSX.Element {
-    const [groups, setGroups] = useState<GroupT[]>([
-        {
-            id: 'dhuiy721udea',
-            title: 'Biology',
-            innerGroups: [
-                {
-                    id: '2disajdlsha',
-                    title: 'Exams',
-                    notes: [
-                        {
-                            id: 'test',
-                            title: 'test',
-                            backgroundUrl: '',
-                            unFormattedContent: ''
-                        }
-                    ],
-                    innerGroups: []
-                },
-            ],
-            notes: [],
-        },
-        {
-            id: 'dsay9ed',
-            title: 'Math',
-            innerGroups: [
-                {
-                    id: 'dsa2rfc7sh9ua',
-                    title: 'Exams',
-                    notes: [],
-                    innerGroups: []
-                },
-            ],
-            notes: [],
-        },
-    ]);
+    const groups: Array<GroupT> = useSelector((state: StoreT) => state.groups);
+    const dispatch = useDispatch();
 
     function showOrHideGroup(groupId: string): void {
         const target: Element = document.querySelector(`div[data-group-id="${groupId}"] .notes`);
@@ -90,14 +60,13 @@ export default function NotesView({notes}: Props): JSX.Element {
                         >
                             <i className="fa-solid fa-book"/>
                             {' Notebooks'}
-                            <i className="fa-solid fa-plus float-right mt-1 cursor-pointer" onClick={() => {
-                                setGroups([...groups, {
-                                    id: `dsad2${Math.random()}`,
-                                    notes: [],
-                                    innerGroups: [],
-                                    title: 'unnamed'
-                                }])
-                            }}/>
+                            <i
+                                className="fa-solid fa-plus float-right mt-1 cursor-pointer"
+                                onClick={() => {
+                                    const newGroup: GroupT = Object.assign({}, defaultGroup);
+                                    dispatch(MDNotesService.addGroup(newGroup));
+                                }}
+                            />
                         </div>
                         <div className={'ml-[.5rem]'}>
                             {
