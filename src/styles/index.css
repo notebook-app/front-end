@@ -40,6 +40,20 @@ nav {
     .input {
         @apply border-black border px-2;
     }
+
+    .new-title-input {
+        @apply text-sm;
+        @apply focus:outline-none;
+        height: 30px;
+        width: calc(100% - 50px);
+        background: rgba(255, 255, 255, 0.5);
+        color: white;
+        border-radius: 2px;
+    }
+
+    .group-title {
+        @apply text-sm;
+    }
 }
 
 .context-menu {

@@ -5,11 +5,7 @@ import {useDispatch, useSelector} from "react-redux";
 import MDNotesService from "../services/MDNotesService";
 import {defaultGroup} from "../utils/defaults";
 
-type Props = {
-    notes: NoteT[];
-};
-
-export default function NotesView({notes}: Props): JSX.Element {
+export default function NotesView(): JSX.Element {
     const groups: Array<GroupT> = useSelector((state: StoreT) => state.groups);
     const dispatch = useDispatch();
 
@@ -29,17 +25,18 @@ export default function NotesView({notes}: Props): JSX.Element {
         )
     }
 
-    function Group({group, howManyParents}: { group: GroupT, howManyParents: number }) {
+    function Group({group}: { group: GroupT }) {
         return (
-            <div className={`ml-[0.5rem] block`} data-group-id={group.id} key={group.id}>
+            <div className={`ml-[0.5rem] block`} data-group-id={group.id} key={group.id}
+                 data-group-title={group.title}>
                 <i className="fa-solid fa-angle-down float-left text-gray-500 text-sm cursor-pointer"
-                   onClick={(event) => showOrHideGroup(group.id)}/>
-                <span className={"text-sm"} onClick={() => showOrHideGroup(group.id)}>{group.title}</span>
+                   onClick={() => showOrHideGroup(group.id)}/>
+                <span className={"group-title"} onClick={() => showOrHideGroup(group.id)}>{group.title}</span>
                 <span className={"text-gray-500 float-right"}>{group.notes.length}</span>
                 <div className="notes">
                     {
                         group.innerGroups.map((group: GroupT) =>
-                            <Group key={group.id} group={group} howManyParents={4}/>)
+                            <Group key={group.id} group={group}/>)
                     }
                     {
                         group.notes.map((note: NoteT) => <Note note={note} key={note.id}/>)
@@ -71,7 +68,7 @@ export default function NotesView({notes}: Props): JSX.Element {
                         <div className={'ml-[.5rem]'}>
                             {
                                 groups.map((group: GroupT) => {
-                                    return <Group key={group.id} howManyParents={1} group={group}/>
+                                    return <Group key={group.id} group={group}/>
                                 })
                             }
                         </div>

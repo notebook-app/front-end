@@ -29,7 +29,35 @@ const optionsOnNotesGroup: ContextMenuGroupT = {
         {
             id: 'tsd23ed',
             title: 'Rename',
-            action: () => {
+            action: ({groupId}) => {
+                const groupElement: HTMLDivElement = document.querySelector(`[data-group-id="${groupId}"]`);
+                const actualGroupName: string = groupElement.getAttribute('data-group-title');
+
+                document.querySelectorAll('.new-title-input').forEach((input) => {
+                    input.remove();
+                });
+
+                const input: HTMLInputElement = document.createElement('input');
+                input.classList.add('new-title-input');
+                input.value = actualGroupName;
+
+                input.addEventListener('keyup', (ev: KeyboardEvent) => {
+                    if (ev.key === 'Enter') {
+                        const titleElement: HTMLSpanElement = document.createElement('span');
+                        const newTitle: string = input.value;
+
+                        titleElement.classList.add('group-title');
+
+                        titleElement.innerText = newTitle;
+
+                        groupElement.setAttribute('data-group-title', newTitle);
+                        input.replaceWith(titleElement)
+                        store.dispatch(MDNotesService.renameGroup(groupId, newTitle));
+                    }
+                });
+
+                groupElement.querySelector('.group-title').replaceWith(input);
+                input.focus();
             }
         },
         {
@@ -41,8 +69,7 @@ const optionsOnNotesGroup: ContextMenuGroupT = {
         {
             id: 'tsad',
             title: 'New group',
-            action: (parentId: string) => {
-                // @ts-ignore
+            action: () => {
                 store.dispatch(MDNotesService.addGroup(defaultGroup, 'd1'));
             }
         }
@@ -57,13 +84,12 @@ const optionsOnSingleNote: ContextMenuGroupT = {
             id: 'tes',
             title: 'Rename',
             action: () => {
-                store.dispatch(MDNotesService.addNote('dhuiy721udea', {id: 'dsa', title: '', unFormattedContent: ''}))
             }
         },
     ],
 }
 
-function createContextMenu(options: ContextMenuGroupT, {x, y}): HTMLDivElement {
+function createContextMenu(options: ContextMenuGroupT, target: HTMLElement, {x, y}): HTMLDivElement {
     const contextMenu = document.createElement('div');
     contextMenu.classList.add('absolute', 'h-[150px]', 'w-[100px]', 'color-white', 'context-menu');
 
@@ -71,8 +97,11 @@ function createContextMenu(options: ContextMenuGroupT, {x, y}): HTMLDivElement {
         const optionEl: Element = document.createElement('div');
         optionEl.innerHTML = option.title;
         optionEl.addEventListener('click', () => {
-            option.action()
-        })
+            const noteId: string = target.getAttribute('data-note-id');
+            const groupId: string = target.getAttribute('data-group-id');
+            const payload = {noteId, groupId};
+            option.action(payload);
+        });
         contextMenu.appendChild(optionEl);
     }
 
@@ -105,7 +134,10 @@ document.addEventListener('mousemove', ({x, y}) => {
         const context: HTMLElement = findContext(e.target as HTMLElement);
         const isNote: boolean = context.hasAttribute('data-note-id');
         const isGroup: boolean = context.hasAttribute('data-group-id');
-        contextMenu = createContextMenu(isNote ? optionsOnSingleNote : (isGroup ? optionsOnNotesGroup : null), {x, y});
+        contextMenu = createContextMenu(isNote ? optionsOnSingleNote : (isGroup ? optionsOnNotesGroup : null), context, {
+            x,
+            y
+        });
 
         document.body.appendChild(contextMenu);
     });

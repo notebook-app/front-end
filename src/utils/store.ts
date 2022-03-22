@@ -21,7 +21,7 @@ function reducer(state: StoreT = {
             return {...state}
         case MD_NOTES_ACTIONS.RENAME_NOTE:
             return {...state}
-        case MD_NOTES_ACTIONS.ADD_GROUP:
+        case MD_NOTES_ACTIONS.ADD_GROUP: {
             const {group, parentId} = action.payload;
             group.id = 'd' + key;
             key++;
@@ -38,8 +38,31 @@ function reducer(state: StoreT = {
 
             state.groups = [...state.groups, group];
             return {...state};
-        case MD_NOTES_ACTIONS.RENAME_GROUP:
+        }
+        case MD_NOTES_ACTIONS.RENAME_GROUP: {
+            const {groupId, newTitle} = action.payload;
+            const groupToRename: GroupT = state.groups.find((group: GroupT) => group.id === groupId);
+            const isNested: boolean = !Boolean(groupToRename);
+
+            if (!isNested) {
+                groupToRename.title = newTitle;
+                state.groups = state.groups.map(group => group.id === groupId ? groupToRename : group);
+
+                return {...state}
+            }
+
+            for (const group of state.groups) {
+                for (const nestedGroup of group.innerGroups) {
+                    if (nestedGroup.id === groupId) {
+                        nestedGroup.title = newTitle;
+                    }
+                }
+            }
+
+            console.log(state)
+
             return {...state}
+        }
         default:
             console.log(`undefined action type: ${action.type}`)
             return state;
