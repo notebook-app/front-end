@@ -1,18 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import {NoteT, UserSetterT, UserT} from 'utils/types';
+import {UserSetterT, UserT} from 'utils/types';
 import {Login} from 'components/Login';
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import StickyNotesView from "./views/StickyNotesView";
 import NotesView from "./views/NotesView";
-
-const testNotes: NoteT[] = [
-    {
-        id: 'dsaueh',
-        title: 'title',
-        backgroundUrl: '',
-        unFormattedContent: '# test'
-    }
-];
 
 function MainView({user, setUser}: { user: UserT, setUser: UserSetterT }) {
     return (
@@ -40,7 +31,7 @@ export default function App() {
                 <Routes>
                     <Route path={'/'} element={<MainView user={user} setUser={setUser}/>}/>
                     <Route path={'/sticky-notes'} element={<StickyNotesView/>}/>
-                    <Route path={'/notes'} element={<NotesView notes={testNotes}/>}/>
+                    <Route path={'/notes'} element={<NotesView/>}/>
                 </Routes>
             </BrowserRouter>
         </div>
