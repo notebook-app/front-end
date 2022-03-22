@@ -28,5 +28,10 @@ export type StoreT = {
     user: UserT;
 }
 
+export type Action = {
+    type: string;
+    payload?: any;
+}
+
 export type UserSetterT = Dispatch<SetStateAction<UserT>>;
 export type HasAccountSetterT = Dispatch<SetStateAction<boolean>>;
