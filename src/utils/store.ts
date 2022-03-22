@@ -9,29 +9,37 @@ export enum MD_NOTES_ACTIONS {
     RENAME_GROUP = 'MD_NOTES/RENAME_GROUP',
 }
 
-export let store: Store<Array<any>> = createStore(reducer);
+// @ts-ignore
+export let store: Store<Array<any>> = createStore(reducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+let key = 1;
 
 function reducer(state: StoreT = {
     groups: [], user: null
 }, action: Action) {
     switch (action.type) {
         case MD_NOTES_ACTIONS.ADD_NOTE:
-            return state
+            return {...state}
         case MD_NOTES_ACTIONS.RENAME_NOTE:
-            return state
+            return {...state}
         case MD_NOTES_ACTIONS.ADD_GROUP:
             const {group, parentId} = action.payload;
-            group.id = 'd' + Math.random();
+            group.id = 'd' + key;
+            key++;
 
             if (parentId) {
-                state.groups.find((group: GroupT) => group.id === parentId).innerGroups.push(group);
+                const parentGroup: GroupT = state.groups.find((group: GroupT) => group.id === parentId);
+                parentGroup.innerGroups = [...parentGroup.innerGroups, group];
+
+                return {
+                    ...state,
+                    groups: state.groups.map((group: GroupT) => group.id === parentId ? parentGroup : group)
+                }
             }
 
             state.groups = [...state.groups, group];
-            console.log(state)
             return {...state};
         case MD_NOTES_ACTIONS.RENAME_GROUP:
-            return
+            return {...state}
         default:
             console.log(`undefined action type: ${action.type}`)
             return state;
