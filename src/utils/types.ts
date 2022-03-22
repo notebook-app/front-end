@@ -23,5 +23,10 @@ export type GroupT = {
     notes: NoteT[];
 };
 
+export type StoreT = {
+    groups: GroupT[];
+    user: UserT;
+}
+
 export type UserSetterT = Dispatch<SetStateAction<UserT>>;
 export type HasAccountSetterT = Dispatch<SetStateAction<boolean>>;
