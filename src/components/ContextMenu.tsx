@@ -1,3 +1,6 @@
+import MDNotesService from "../services/MDNotesService";
+import {store} from "../utils/store";
+
 type ContextMenuOptionT = {
     readonly id: string;
     title: string;
@@ -45,6 +48,7 @@ const optionsOnSingleNote: ContextMenuGroupT = {
             id: 'tes',
             title: 'Rename',
             action: () => {
+                store.dispatch(MDNotesService.addNote('dhuiy721udea', {id: 'dsa', title: '', unFormattedContent: ''}))
             }
         },
     ],
@@ -57,6 +61,9 @@ function createContextMenu(options: ContextMenuGroupT, {x, y}): HTMLDivElement {
     for (const option of options.options) {
         const optionEl: Element = document.createElement('div');
         optionEl.innerHTML = option.title;
+        optionEl.addEventListener('click', () => {
+            option.action()
+        })
         contextMenu.appendChild(optionEl);
     }
 
