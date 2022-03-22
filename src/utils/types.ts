@@ -10,14 +10,14 @@ export type AuthUserT = {
 };
 
 export type NoteT = {
-    id: string;
+    readonly id?: string;
     title: string;
     unFormattedContent: string;
     backgroundUrl?: string;
 };
 
 export type GroupT = {
-    readonly id: string;
+    readonly id?: string;
     innerGroups: GroupT[];
     title: string;
     notes: NoteT[];
