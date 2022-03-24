@@ -125,7 +125,6 @@ document.addEventListener('click', () => {
 
 document.addEventListener('mousemove', ({x, y}) => {
     document.addEventListener('contextmenu', (e: MouseEvent) => {
-        e.preventDefault();
         let contextMenu: HTMLDivElement | undefined = document.querySelector('.context-menu');
 
         if (contextMenu) {
@@ -135,10 +134,14 @@ document.addEventListener('mousemove', ({x, y}) => {
         const context: HTMLElement = findContext(e.target as HTMLElement);
         const isNote: boolean = context.hasAttribute('data-note-id');
         const isGroup: boolean = context.hasAttribute('data-group-id');
-        contextMenu = createContextMenu(isNote ? optionsOnSingleNote : (isGroup ? optionsOnNotesGroup : null), context, {
-            x,
-            y
-        });
+
+        if (!isNote && !isGroup) {
+            return;
+        }
+
+        e.preventDefault();
+
+        contextMenu = createContextMenu(isNote ? optionsOnSingleNote : optionsOnNotesGroup, context, { x, y });
 
         document.body.appendChild(contextMenu);
     });
