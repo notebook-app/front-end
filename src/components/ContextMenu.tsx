@@ -70,8 +70,8 @@ const optionsOnNotesGroup: ContextMenuGroupT = {
         {
             id: 'tsad',
             title: 'New group',
-            action: () => {
-                store.dispatch(MDNotesService.addGroup(defaultGroup, 'd1'));
+            action: ({ groupId }) => {
+                store.dispatch(MDNotesService.addGroup(defaultGroup, groupId));
             }
         }
     ],
