@@ -1,5 +1,5 @@
 import MDNotesService from "../services/MDNotesService";
-import {store} from "../utils/store";
+import {store} from "../store/store";
 import {defaultGroup, defaultNote} from "../utils/defaults";
 
 type ContextMenuOptionT = {

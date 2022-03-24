@@ -1,5 +1,5 @@
 import {Action, GroupT, NoteT} from "../utils/types";
-import {MD_NOTES_ACTIONS} from "../utils/store";
+import {MD_NOTES_ACTIONS} from "../store/store";
 
 export default class MDNotesService {
     static addNote(groupId: string, note: NoteT): Action {
