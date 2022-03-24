@@ -5,7 +5,7 @@ export default class MDNotesService {
     static addNote(groupId: string, note: NoteT): Action {
         return {
             type: MD_NOTES_ACTIONS.ADD_NOTE,
-            payload: note
+            payload: { note, groupId }
         } as Action;
     }
 

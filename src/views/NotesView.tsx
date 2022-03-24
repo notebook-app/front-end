@@ -19,7 +19,7 @@ export default function NotesView(): JSX.Element {
 
     function Note({note}: { note: NoteT }): JSX.Element {
         return (
-            <div data-note-id={note.id} className={'cursor-pointer'}>
+            <div data-note-id={note.id} className={'cursor-pointer note'}>
                 <span>{note.title}</span>
             </div>
         )

@@ -17,8 +17,12 @@ function reducer(state: StoreT = {
     groups: [], user: null
 }, action: Action) {
     switch (action.type) {
-        case MD_NOTES_ACTIONS.ADD_NOTE:
-            return {...state}
+        case MD_NOTES_ACTIONS.ADD_NOTE: {
+            const parentGroup: GroupT = state.groups.find((group: GroupT) => group.id === action.payload.groupId);
+            parentGroup.notes = [...parentGroup.notes, action.payload.note];
+
+            return {...state, groups: state.groups.map(group => group.id === action.payload.groupId ? parentGroup : group)}
+        }
         case MD_NOTES_ACTIONS.RENAME_NOTE:
             return {...state}
         case MD_NOTES_ACTIONS.ADD_GROUP: {

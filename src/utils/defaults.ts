@@ -2,7 +2,7 @@ import {GroupT, NoteT} from "./types";
 
 export const defaultNote: NoteT = {
     unFormattedContent: '',
-    title: '',
+    title: 'note',
     backgroundUrl: ''
 }
 export const defaultGroup: GroupT = {

@@ -1,6 +1,6 @@
 import MDNotesService from "../services/MDNotesService";
 import {store} from "../utils/store";
-import {defaultGroup} from "../utils/defaults";
+import {defaultGroup, defaultNote} from "../utils/defaults";
 
 type ContextMenuOptionT = {
     readonly id: string;
@@ -63,7 +63,8 @@ const optionsOnNotesGroup: ContextMenuGroupT = {
         {
             id: 'teasa',
             title: 'New note',
-            action: () => {
+            action: ({ groupId }) => {
+                store.dispatch(MDNotesService.addNote(groupId, defaultNote));
             }
         },
         {
